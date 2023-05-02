@@ -1,31 +1,71 @@
 ---
-- name: 创建临时目录
-  file: dest={{ tmp_dir }} state=directory
-
-- name: 拷贝nginx,keepalived安装包
-  unarchive: src={{ software_dir }}/ha.tar.gz dest={{ tmp_dir }}
-
 - name: 安装keepalived高可用软件
-  yum: name={{ tmp_dir }}/{{ item }} state=present
-  with_items:
-    - "net-snmp-libs-5.7.2-43.el7.x86_64.rpm"
-    - "net-snmp-agent-libs-5.7.2-43.el7.x86_64.rpm"
-    - "keepalived-1.3.5-16.el7.x86_64.rpm"
+  package:
+    name: keepalived
+    state: present
 
 - name: 安装nginx负载均衡器
-  yum: name={{ tmp_dir }}/nginx-1.16.1-1.el7.ngx.x86_64.rpm state=present
-
-- name: 拷贝nginx配置文件
-  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
-
-- name: 拷贝keepalived配置文件       
-  template: src=keepalived.conf.j2 dest=/etc/keepalived/keepalived.conf
+  package:
+    name: nginx
+    state: present
 
 - name: 拷贝nginx健康检查脚本
-  copy: src=check_nginx.sh dest=/etc/keepalived/ mode=u+x
+  copy:
+    src: check_nginx.sh
+    dest: /etc/keepalived/
+    mode: u+x
+
+- name: 修改keepalived配置文件
+  blockinfile:
+    path: /etc/keepalived/keepalived.conf
+    insertbefore: "vrrp_instance"
+    block: |
+      vrrp_script check_nginx {
+          script /etc/keepalived/check_nginx.sh
+          interval 2
+          timeout 2
+          weight 2
+          user root
+      }
+  notify: reload keepalived
+
+- name: 修改keepalived配置文件
+  lineinfile:
+    path: /etc/keepalived/keepalived.conf
+    insertafter: "track_script"
+    line: "        check_nginx"
+  notify: reload keepalived
+
+- name: 修改nginx配置文件
+  blockinfile:
+    path: /etc/nginx/nginx.conf
+    insertbefore: "http {"
+    block: |
+      stream {
+      
+          log_format  main  '$remote_addr $upstream_addr - [$time_local] $status $upstream_bytes_sent';
+      
+          access_log  /var/log/nginx/k8s-access.log  main;
+      
+          upstream k8s-apiserver {
+              {% for ip in groups['master'] %}
+              server {{ hostvars[ip].inventory_hostname }}:6443;
+              {% endfor %}
+          }
+          
+          server {
+             listen 16443;
+             proxy_pass k8s-apiserver;
+          }
+      }
+  notify: reload nginx
 
 - name: 启动服务
-  systemd: name={{ item }} state=restarted enabled=yes daemon_reload=yes
+  systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+    daemon_reload: true
   with_items:
     - nginx
     - keepalived

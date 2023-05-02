@@ -4,20 +4,24 @@
 #  shell: kubectl certificate approve $(kubectl get csr |awk 'NR!=1{print $1}')
 
 - name: 拷贝YAML文件到Master
-  copy: src={{ item }} dest={{ tmp_dir }}
+  copy:
+    src: "{{ item }}"
+    dest: "{{ k8s_work_dir }}/yaml"
   with_fileglob:
     - "*.yaml"
 
 - name: 部署Calico,Dashboard,CoreDNS,Ingress
   ignore_errors: yes
   shell: |
-         cd {{ tmp_dir }}
+         cd "{{ k8s_work_dir }}/yaml"
          for yaml in $(ls *.yaml);do kubectl apply -f $yaml;done
 
 - name: 查看Pod状态
   shell: kubectl get all --all-namespaces
   register: getall
-- debug: var=getall.stdout_lines
+
+- debug:
+    var: getall.stdout_lines
 
 - name: 创建Dashboard管理员令牌
   ignore_errors: yes 
@@ -33,6 +37,8 @@
          echo "访问地址--->$web"
          echo "令牌内容--->$token" 
   register: ui
+
 - name: Kubernetes Dashboard登录信息
-  debug: var=ui.stdout_lines
+  debug:
+    var: ui.stdout_lines
 

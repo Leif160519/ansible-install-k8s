@@ -1,0 +1,14 @@
+docker_root_dir: /var/lib/docker
+address: 10.244.0.0/16
+size: 24
+mirrors1: http://hub-mirror.c.163.com
+mirrors2: https://registry.cn-hangzhou.aliyuncs.com
+mirrors3: http://docker.mirrors.ustc.edu.cn
+mirrors4: https://registry.docker-cn.com
+log_max_file: 3
+log_max_size: 10m
+cgroupdriver: systemd
+
+cri_docker_version: 0.3.1
+cri_docker_tag: cri-dockerd-{{ cri_docker_version }}.amd64
+cri_docker_url: https://github.com/Mirantis/cri-dockerd/releases/download/v{{ cri_docker_version }}/{{ cri_docker_tag }}.tgz

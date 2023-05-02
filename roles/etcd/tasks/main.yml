@@ -1,42 +1,86 @@
 ---
 - name: 创建工作目录
-  file: dest={{ etcd_work_dir }}/{{ item }} state=directory
+  file:
+    dest: "{{ etcd_work_dir }}/{{ item }}"
+    state: directory
   with_items:
     - bin
     - cfg
     - ssl
 
-- name: 创建临时目录
-  file: dest={{ tmp_dir }} state=directory
+- name: 下载etcd和etcdctl
+  unarchive:
+    src: "{{ etcd_url }}"
+    dest: /tmp
+    remote_src: true
 
-- name: 分发并解压etcd二进制包
-  unarchive: src={{ item }} dest={{ tmp_dir }}
-  with_fileglob:
-    - "{{ software_dir }}/etcd-v*.tar.gz"
+- name: 安装etcd和etcdctl
+  copy:
+    dest: "{{ etcd_work_dir }}/bin/"
+    src: "{{ item }}"
+    mode: u+x
+  with_items:
+    - /tmp/{{ etcd_tag }}/etcd
+    - /tmp/{{ etcd_tag }}/etcdctl
 
-- name: 移动etcd二进制文件
-  shell: cp -rf {{ tmp_dir }}/etcd-v*/{etcd,etcdctl} {{ etcd_work_dir }}/bin
+- name: 创建etcd和etcdctl软链接
+  file:
+    src: "/tmp/{{ etcd_tag }}/{{ item }}"
+    dest: "/usr/bin/{{ item }}"
+    state: link
+    mode: u+x
+  with_items:
+    - etcd
+    - etcdctl
+    
+- name: 准备cfssl工具
+  get_url:
+    url: "{{ item.url }}"
+    dest: "/usr/bin/{{ item.bin }}"
+    mode: u+x
+  with_items:
+    - { url: "{{ cfssl_url }}" , bin: "{{ cfssl }}" }
+    - { url: "{{ cfssljson_url }}" , bin: "{{ cfssljson }}" }
+    - { url: "{{ cfssl_certinfo_url }}" , bin: "{{ cfssl-certinfo }}" }
 
 - name: 分发证书
-  copy: src=etcd_cert/{{ item }} dest={{ etcd_work_dir }}/ssl
+  copy:
+    src: etcd_cert/{{ item }}
+    dest: "{{ etcd_work_dir }}/ssl"
   with_items:
     - ca.pem
     - server.pem
     - server-key.pem
+  notify: restart etcd
 
 - name: 分发etcd配置文件
-  template: src=etcd.conf.j2 dest={{ etcd_work_dir }}/cfg/etcd.conf
+  template:
+    src: etcd.conf.j2
+    dest: "{{ etcd_work_dir }}/cfg/etcd.conf"
+  notify: restart etcd
 
 - name: 分发service文件
-  template: src=etcd.service.j2 dest=/usr/lib/systemd/system/etcd.service
+  template:
+    src: etcd.service.j2
+    dest: /lib/systemd/system/etcd.service
+  notify: restart etcd
     
 - name: 启动etcd
-  systemd: name=etcd state=restarted enabled=yes daemon_reload=yes
+  systemd:
+    name: etcd
+    state: started
+    enabled: true
+    daemon_reload: true
 
 - name: 分发etcd脚本
-  template: src=etcd.sh.j2 dest={{ tmp_dir }}/etcd.sh mode=u+x
+  template:
+    src: etcd.sh.j2
+    dest: "{{ etcd_work_dir }}/etcd.sh"
+    mode: u+x
 
 - name: 获取etcd集群状态
-  shell: /bin/bash {{ tmp_dir }}/etcd.sh
+  shell: /bin/bash {{ etcd_work_dir }}/etcd.sh
   register: status 
-- debug: var=status.stdout_lines
+
+- debug:
+    var: status.stdout_lines

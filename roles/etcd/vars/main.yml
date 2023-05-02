@@ -1,0 +1,9 @@
+---
+etcd_version: 3.5.8
+etcd_tag: etcd-v{{ etcd_version }}-linux-amd64
+etcd_url: https://github.com/etcd-io/etcd/releases/download/v{{ etcd_version }}/{{ etcd_tag }}.tar.gz
+
+cfssl_version: 1.6.4
+cfssljson_url: https://github.com/cloudflare/cfssl/releases/download/{{ cfssl_version }}/cfssljson_{{ cfssl_version }}_linux_amd64
+cfssl_certinfo_url: https://github.com/cloudflare/cfssl/releases/download/{{ cfssl_version }}/cfssl-certinfo_{{ cfssl_version }}_linux_amd64
+cfssl_url: https://github.com/cloudflare/cfssl/releases/download/{{ cfssl_version }}/cfssl_{{ cfssl_version }}_linux_amd64

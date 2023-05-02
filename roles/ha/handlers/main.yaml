@@ -1,0 +1,13 @@
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+    daemon_reload: true
+    enabled: true
+
+- name: reload keepalived
+  service:
+    name: keepalived
+    state: reloaded
+    daemon_reload: true
+    enabled: true

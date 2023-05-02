@@ -1,0 +1,5 @@
+playbooks/ssl
+roles/master/files/etcd_cert
+roles/master/files/k8s_cert
+roles/node/files/k8s_cert
+roles/etcd/files/etcd_cert

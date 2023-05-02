@@ -1,11 +1,10 @@
-{% set local_ip = inventory_hostname %}
 KUBE_APISERVER_OPTS="--logtostderr=false \
 --v=2 \
 --log-dir={{ k8s_work_dir }}/logs \
 --etcd-servers={% for host in groups['etcd'] %}https://{{ hostvars[host].inventory_hostname }}:2379{% if not loop.last %},{% endif %}{% endfor %} \
---bind-address={{ local_ip }} \
+--bind-address={{ inventory_hostname }} \
 --secure-port=6443 \
---advertise-address={{ local_ip }} \
+--advertise-address={{ inventory_hostname }} \
 --allow-privileged=true \
 --service-cluster-ip-range={{ service_cidr }} \
 --enable-admission-plugins=NodeRestriction \

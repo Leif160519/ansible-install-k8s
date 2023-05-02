@@ -7,7 +7,7 @@ Wants=network-online.target
 [Service]
 Type=notify
 EnvironmentFile={{ etcd_work_dir }}/cfg/etcd.conf
-ExecStart={{ etcd_work_dir }}/bin/etcd \
+ExecStart=/usr/bin/etcd \
         --cert-file={{ etcd_work_dir }}/ssl/server.pem \
         --key-file={{ etcd_work_dir }}/ssl/server-key.pem \
         --peer-cert-file={{ etcd_work_dir }}/ssl/server.pem \

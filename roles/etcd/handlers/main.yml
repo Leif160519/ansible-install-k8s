@@ -1,0 +1,6 @@
+- name: restart etcd
+  service:
+    name: etcd
+    state: restarted
+    enabled: true
+    daemon_reload: true

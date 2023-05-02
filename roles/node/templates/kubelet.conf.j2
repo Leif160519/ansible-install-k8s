@@ -6,4 +6,6 @@ KUBELET_OPTS="--logtostderr=false \
 --bootstrap-kubeconfig={{ k8s_work_dir }}/cfg/bootstrap.kubeconfig \
 --config={{ k8s_work_dir }}/cfg/kubelet-config.yml \
 --cert-dir={{ k8s_work_dir }}/ssl \
---container-runtime-endpoint=unix:///var/run/cri-dockerd.sock"
+--container-runtime-endpoint=unix:///var/run/cri-dockerd.sock \
+--cgroup-driver=systemd \
+--pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.7"

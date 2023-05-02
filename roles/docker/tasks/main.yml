@@ -1,43 +1,45 @@
 ---
-- name: 创建临时目录
-  file: dest={{ tmp_dir }} state=directory
+- include_tasks: Debian.yml
+  when: ansible_os_family == "Debian"
 
-- name: 分发并解压docker二进制包
-  unarchive: src={{ item }} dest={{ tmp_dir }}
-  with_fileglob:
-    - "{{ software_dir }}/docker-*.tgz"
+- include_tasks: RedHat.yml
+  when: ansible_os_family == "RedHat"
 
-- name: 移动docker二进制文件
-  shell: cp -rf {{ tmp_dir }}/docker/* /usr/bin
+- name: Start docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
 
-- name: 分发service文件
-  copy: src=docker.service dest=/usr/lib/systemd/system/
+- name: Config docker.json
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    mode: 0644
+  notify: restart docker service
 
-- name: 创建目录
-  file: dest=/etc/docker state=directory
+- name: 下载cri-docker二进制包
+  unarchive:
+    src: "{{ cri_docker_url }}"
+    dest: /opt
+    remote_src: true
 
-- name: 配置docker
-  copy: src=daemon.json dest=/etc/docker/daemon.json
-
-- name: 启动docker
-  systemd: name=docker state=restarted enabled=yes daemon_reload=yes
-
-- name: 查看状态
-  shell: docker info
-  register: docker 
-- debug: var=docker.stdout_lines
-
-- name: 分发并解压cri-dockerd二进制包
-  unarchive: src={{ item }} dest={{ tmp_dir }}
-  with_fileglob:
-    - "{{ software_dir }}/cri-dockerd-*.tgz"
+- name: 创建cri-docker软链接
+  file:
+    src: /opt/cri-dockerd/cri-dockerd
+    dest: /usr/bin/cri-dockerd
+    force: true
+    state: link
+    mode: u+x
     
-- name: 移动cri=dockerd二进制文件
-  shell: cp -rf {{ tmp_dir }}/cri-dockerd/cri-dockerd /usr/bin
-  
-- name: 分发service文件
-  copy: src=cri-docker.service dest=/usr/lib/systemd/system/
-  
-- name: 启动cri-dockerd
-  systemd: name=cri-docker state=restarted enabled=yes daemon_reload=yes
-  
+- name: 分发cri-docker service文件
+  template:
+    dest: /lib/systemd/system/cri-docker.service
+    src: cri-docker.service.j2
+
+- name: 启动cri-docker
+  service:
+    name: cri-docker
+    enabled: true
+    state: started
+    daemon_reload: true

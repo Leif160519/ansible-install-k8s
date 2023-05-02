@@ -1,4 +1,5 @@
-ETCDCTL_API=3 {{ etcd_work_dir }}/bin/etcdctl \
+#!/bin/bash
+ETCDCTL_API=3 /usr/bin/etcdctl \
 --cacert={{ etcd_work_dir }}/ssl/ca.pem \
 --cert={{ etcd_work_dir }}/ssl/server.pem \
 --key={{ etcd_work_dir }}/ssl/server-key.pem \
