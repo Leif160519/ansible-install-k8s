@@ -4,7 +4,7 @@
 完善了对Debian系列的支持
 还有其他，等待你的发现。。。
 
-# Kubernetes v1.25 企业级高可用集群自动部署（在线版）
+# Kubernetes v1.26.4 企业级高可用集群自动部署（在线版）
 >### 注：确保所有节点系统时间一致
 >### 操作系统要求：CentOS7.x_x64 && > Ubuntu 18.04 LTS
 
@@ -36,7 +36,7 @@
 
 ```
 # vim group_vars/all.yml
-software_dir: '/root/binary_pkg'
+k8s_version: 1.26.4
 ...
 cert_hosts:
   k8s:
@@ -63,11 +63,11 @@ cert_hosts:
 ```
 # kubectl get node
 NAME            STATUS   ROLES    AGE   VERSION
-k8s-master-01   Ready    <none>   54m   v1.25.2
-k8s-master-02   Ready    <none>   54m   v1.25.2
-k8s-node-01     Ready    <none>   54m   v1.25.2
-k8s-node-02     Ready    <none>   54m   v1.25.2
-k8s-node-03     Ready    <none>   54m   v1.25.2
+k8s-master-01   Ready    <none>   54m   v1.26.4
+k8s-master-02   Ready    <none>   54m   v1.26.4
+k8s-node-01     Ready    <none>   54m   v1.26.4
+k8s-node-02     Ready    <none>   54m   v1.26.4
+k8s-node-03     Ready    <none>   54m   v1.26.4
 ```
 
 ## 6、其他
