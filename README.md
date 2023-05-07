@@ -1,8 +1,11 @@
 # 说明
 魔改自阿良老师的项目 https://github.com/lizhenliang/ansible-install-k8s
-修改了一些镜像的地址为阿里云
-完善了对Debian系列的支持
-还有其他，等待你的发现。。。
+- 修改了一些镜像的地址为阿里源或dockerhub中的源
+- 完善了对Debian系列的支持
+- 升级k8s版本至1.26.4
+- 将离线版安装方式改为在线版
+- 支持k8s安装版本选择功能
+- 还有其他，等待你的发现。。。
 
 # Kubernetes v1.26.4 企业级高可用集群自动部署（在线版）
 >### 注：确保所有节点系统时间一致
@@ -32,7 +35,7 @@
 # vim inventory/hosts
 ...
 ```
-修改group_vars/all.yml文件，修改软件包目录和证书可信任IP。
+修改group_vars/all.yml文件，修改k8s版本，软件包目录和证书可信任IP。
 
 ```
 # vim group_vars/all.yml
