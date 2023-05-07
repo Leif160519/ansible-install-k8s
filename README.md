@@ -45,10 +45,10 @@ cert_hosts:
 ## 4、一键部署
 ### 4.1 架构图
 单Master架构
-![avatar](https://github.com/lizhenliang/ansible-install-k8s/blob/master/single-master.jpg)
+![avatar](img/single-master.jpg)
 
 多Master架构
-![avatar](https://github.com/lizhenliang/ansible-install-k8s/blob/master/multi-master.jpg)
+![avatar](img/multi-master.jpg)
 ### 4.2 部署命令
 单Master版：
 ```
