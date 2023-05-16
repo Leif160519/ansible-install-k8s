@@ -1,5 +1,5 @@
 ---
 cfssl_version: 1.6.4
-cfssljson_url: https://github.com/cloudflare/cfssl/releases/download/{{ cfssl_version }}/cfssljson_{{ cfssl_version }}_linux_amd64
-cfssl_certinfo_url: https://github.com/cloudflare/cfssl/releases/download/{{ cfssl_version }}/cfssl-certinfo_{{ cfssl_version }}_linux_amd64
-cfssl_url: https://github.com/cloudflare/cfssl/releases/download/{{ cfssl_version }}/cfssl_{{ cfssl_version }}_linux_amd64
+cfssljson_url: https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_version }}/cfssljson_{{ cfssl_version }}_linux_amd64
+cfssl_certinfo_url: https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_version }}/cfssl-certinfo_{{ cfssl_version }}_linux_amd64
+cfssl_url: https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_version }}/cfssl_{{ cfssl_version }}_linux_amd64
