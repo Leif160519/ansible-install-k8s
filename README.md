@@ -97,7 +97,7 @@ k8s-node-03     Ready    <none>   54m   v1.26.4
 ### 6.3 所有HTTPS证书存放路径
 部署产生的证书都会存放到目录“ansible-install-k8s/playbooks/ssl”，一定要保存好，后面还会用到~
 
-## 6.4 若coredns一直起不来问题解决
+### 6.4 若coredns一直起不来问题解决
 清排查本地dns配置:
 ```
 cat /etc/resolv.conf
