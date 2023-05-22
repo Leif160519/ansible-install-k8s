@@ -149,3 +149,8 @@
   with_items:
     - export KUBECONFIG=/root/.kube/config
     - source <(kubectl completion bash)
+
+- name: 定义节点ROLES属性
+  shell: |
+    kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/master=
+    kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/worker=

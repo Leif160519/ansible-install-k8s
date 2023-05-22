@@ -104,3 +104,7 @@
   with_items:
     - kubelet
     - kube-proxy
+
+- name: 定义节点ROLES属性
+  shell: |
+    kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/worker=
