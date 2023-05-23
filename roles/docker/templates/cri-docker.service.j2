@@ -1,7 +1,7 @@
 [Unit]
 Description=CRI Interface for Docker Application Container Engine
 Documentation=https://docs.mirantis.com
-After=network-online.target firewalld.service docker.service
+After=network-online.target docker.service
 Wants=network-online.target
 
 [Service]
@@ -11,3 +11,6 @@ ExecReload=/bin/kill -s HUP $MAINPID
 TimeoutSec=0
 RestartSec=2
 Restart=always
+
+[Install]
+WantedBy=multi-user.target
