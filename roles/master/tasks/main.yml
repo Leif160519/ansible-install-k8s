@@ -154,3 +154,11 @@
   shell: |
     kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/master=
     kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/worker=
+
+- name: 安装kubetail查看pod日志工具
+  get_url:
+    url: https://raw.githubusercontent.com/johanhaleby/kubetail/master/kubetail
+    dest: /usr/bin/kubetail
+    owner: root
+    group: root
+    mode: u+x
