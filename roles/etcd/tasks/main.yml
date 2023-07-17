@@ -8,11 +8,16 @@
     - cfg
     - ssl
 
+- stat:
+    path: "/usr/bin/etcd"
+  register: etcd
+
 - name: 下载etcd和etcdctl
   unarchive:
     src: "{{ etcd_url }}"
     dest: /tmp
     remote_src: true
+  when: etcd.stat.exists == false
 
 - name: 安装etcd和etcdctl
   copy:
@@ -22,6 +27,7 @@
   with_items:
     - /tmp/{{ etcd_tag }}/etcd
     - /tmp/{{ etcd_tag }}/etcdctl
+  when: etcd.stat.exists == false
 
 - name: 创建etcd和etcdctl软链接
   file:
@@ -32,16 +38,22 @@
   with_items:
     - etcd
     - etcdctl
-    
+  when: etcd.stat.exists == false
+
+- stat:
+    path: /usr/bin/cfssl
+  register: cfssl
+
 - name: 准备cfssl工具
   get_url:
     url: "{{ item.url }}"
     dest: "/usr/bin/{{ item.bin }}"
     mode: u+x
   with_items:
-    - { url: "{{ cfssl_url }}" , bin: "{{ cfssl }}" }
-    - { url: "{{ cfssljson_url }}" , bin: "{{ cfssljson }}" }
-    - { url: "{{ cfssl_certinfo_url }}" , bin: "{{ cfssl-certinfo }}" }
+    - { url: "{{ cfssl_url }}" , bin: "cfssl" }
+    - { url: "{{ cfssljson_url }}" , bin: "cfssljson" }
+    - { url: "{{ cfssl_certinfo_url }}" , bin: "cfssl-certinfo" }
+  when: cfssl.stat.exists == false
 
 - name: 分发证书
   copy:

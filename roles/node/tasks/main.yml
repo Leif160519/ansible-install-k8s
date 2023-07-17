@@ -50,8 +50,8 @@
 
 - name: 创建k8s node二进制文件软链接
   file:
-    dest: "{{ k8s_work_dir }}/bin/{{ item }}"
-    src: "/usr/bin/{{ item }}"
+    src: "{{ k8s_work_dir }}/bin/{{ item }}"
+    dest: "/usr/bin/{{ item }}"
     mode: u+x
     state: link
     force: true
@@ -94,7 +94,7 @@
   notify:
     - restart kubelet
     - restart kube-proxy
-    
+
 - name: 启动k8s node组件
   systemd:
     name: "{{ item }}"
@@ -108,3 +108,6 @@
 - name: 定义节点ROLES属性
   shell: |
     kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/worker=
+  delegate_to: "k8s-master-01"
+  failed_when: false
+  ignore_errors: true

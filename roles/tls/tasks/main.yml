@@ -1,7 +1,7 @@
 ---
 - name: 获取Ansible工作目录
-  shell: pwd | sed 's#roles/tls##' 
-  register: root_dir 
+  shell: pwd | sed 's#roles/tls##'
+  register: root_dir
 
 - name: 创建工作目录
   file:
@@ -11,15 +11,20 @@
     - etcd
     - k8s
 
+- stat:
+    path: /usr/bin/cfssl
+  register: cfssl
+
 - name: 准备cfssl工具
   get_url:
     url: "{{ item.url }}"
     dest: "/usr/bin/{{ item.bin }}"
     mode: u+x
   with_items:
-    - { url: "{{ cfssl_url }}" , bin: "{{ cfssl }}" }
-    - { url: "{{ cfssljson_url }}" , bin: "{{ cfssljson }}" }
-    - { url: "{{ cfssl_certinfo_url }}" , bin: "{{ cfssl-certinfo }}" }
+    - { url: "{{ cfssl_url }}" , bin: "cfssl" }
+    - { url: "{{ cfssljson_url }}" , bin: "cfssljson" }
+    - { url: "{{ cfssl_certinfo_url }}" , bin: "cfssl-certinfo" }
+  when: cfssl.stat.exists == false
 
 - name: 准备etcd证书请求文件
   template:
@@ -44,10 +49,10 @@
     src: k8s/{{ item }}
     dest: "{{ root_dir.stdout }}/ssl/k8s/{{ item.split('.')[:-1] | join('.') }}"
   with_items:
-    - ca-config.json.j2  
-    - ca-csr.json.j2  
+    - ca-config.json.j2
+    - ca-csr.json.j2
     - server-csr.json.j2
-    - kube-proxy-csr.json.j2  
+    - kube-proxy-csr.json.j2
     - kube-controller-manager-csr.json.j2
     - kube-scheduler-csr.json.j2
     - admin-csr.json.j2
@@ -58,5 +63,5 @@
     dest: "{{ root_dir.stdout }}/ssl/k8s"
     mode: u+x
 
-- name: 生成k8s证书 
+- name: 生成k8s证书
   shell: cd {{ root_dir.stdout }}/ssl/k8s && /bin/bash generate_k8s_cert.sh

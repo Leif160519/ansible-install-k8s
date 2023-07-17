@@ -1,7 +1,7 @@
 # 版本信息
-k8s_version: 1.25.9
+k8s_version: 1.25.11
 
-# 安装目录 
+# 安装目录
 k8s_work_dir: '/opt/kubernetes'
 etcd_work_dir: '/opt/etcd'
 

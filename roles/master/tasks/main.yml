@@ -24,11 +24,11 @@
     - "{{ kube_apiserver_url }}"
     - "{{ kube_controller_manager_url }}"
     - "{{ kube_scheduler_url }}"
-    - "{{ kubectl_version }}"
+    - "{{ kubectl_url }}"
 
 - name: 创建kubectl二进制文件软链接
   file:
-    src: "{{ k8s_word_dir }}/bin/{{ item }}"
+    src: "{{ k8s_work_dir }}/bin/{{ item }}"
     dest: "/usr/bin/{{ item }}"
     mode: u+x
     state: link
@@ -129,18 +129,20 @@
   ignore_errors: yes
   shell: |
       sleep 3
-      kubectl apply -f "{{ k8s_work_dir }}/apiserver-to-kubelet-rbac.yaml"
-      kubectl apply -f "{{ k8s_work_dir }}/kubelet-bootstrap-rbac.yaml"
+      kubectl apply -f "{{ k8s_work_dir }}/yaml/apiserver-to-kubelet-rbac.yaml"
+      kubectl apply -f "{{ k8s_work_dir }}/yaml/kubelet-bootstrap-rbac.yaml"
 
 - name: 自动审批Kubelet证书
   ignore_errors: yes
   shell: |
-     #自动批准首次申请证书的 CSR 请求 
-     kubectl create clusterrolebinding node-client-auto-approve-csr --clusterrole=system:certificates.k8s.io:certificatesigningrequests:nodeclient --user=kubelet-bootstrap 
-     # 自动批准kubelet客户端证书续签 
-     kubectl create clusterrolebinding node-client-auto-renew-crt --clusterrole=system:certificates.k8s.io:certificatesigningrequests:selfnodeclient --group=system:nodes 
-     # 自动批准kubelet服务端证书续签 
+     #自动批准首次申请证书的 CSR 请求
+     kubectl create clusterrolebinding node-client-auto-approve-csr --clusterrole=system:certificates.k8s.io:certificatesigningrequests:nodeclient --user=kubelet-bootstrap
+     # 自动批准kubelet客户端证书续签
+     kubectl create clusterrolebinding node-client-auto-renew-crt --clusterrole=system:certificates.k8s.io:certificatesigningrequests:selfnodeclient --group=system:nodes
+     # 自动批准kubelet服务端证书续签
      kubectl create clusterrolebinding node-server-auto-renew-crt --clusterrole=system:certificates.k8s.io:certificatesigningrequests:selfnodeserver --group=system:nodes
+  failed_when: false
+  ignore_errors: true
 
 - name: 新增命令行自动提示
   lineinfile:
@@ -154,6 +156,8 @@
   shell: |
     kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/master=
     kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/worker=
+  failed_when: false
+  ignore_errors: true
 
 - name: 安装kubetail查看pod日志工具
   get_url:

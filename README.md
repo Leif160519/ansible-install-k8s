@@ -2,13 +2,13 @@
 魔改自阿良老师的项目 https://github.com/lizhenliang/ansible-install-k8s
 - 修改了一些镜像的地址为国内能下载到的源
 - 新增了对Debian系列的支持
-- 升级k8s版本至1.25.9
+- 升级k8s版本至1.25.11
 - 将离线版安装方式改为在线版，摆脱对百度云的依赖
 - 支持k8s安装版本选择功能
 - 新增节点时间同步的定时任务
 - 还有其他，等待你的发现。。。
 
-# Kubernetes v1.25.9 企业级高可用集群自动部署（在线版）
+# Kubernetes v1.25.11 企业级高可用集群自动部署（在线版）
 >### 注：确保所有节点系统时间一致
 >### 操作系统要求：CentOS7.x_x64 && > Ubuntu 18.04 LTS
 
@@ -40,7 +40,7 @@
 
 ```
 # vim group_vars/all.yml
-k8s_version: 1.25.9
+k8s_version: 1.25.11
 ...
 cert_hosts:
   k8s:
@@ -67,11 +67,11 @@ cert_hosts:
 ```
 # kubectl get node
 NAME            STATUS   ROLES    AGE   VERSION
-k8s-master-01   Ready    <none>   54m   v1.25.9
-k8s-master-02   Ready    <none>   54m   v1.25.9
-k8s-node-01     Ready    <none>   54m   v1.25.9
-k8s-node-02     Ready    <none>   54m   v1.25.9
-k8s-node-03     Ready    <none>   54m   v1.25.9
+k8s-master-01   Ready    <none>   54m   v1.25.11
+k8s-master-02   Ready    <none>   54m   v1.25.11
+k8s-node-01     Ready    <none>   54m   v1.25.11
+k8s-node-02     Ready    <none>   54m   v1.25.11
+k8s-node-03     Ready    <none>   54m   v1.25.11
 ```
 
 ## 6、其他

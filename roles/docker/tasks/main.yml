@@ -18,11 +18,16 @@
     mode: 0644
   notify: restart docker service
 
+- stat:
+    path: /usr/bin/cri-dockerd
+  register: cri
+
 - name: 下载cri-docker二进制包
   unarchive:
     src: "{{ cri_docker_url }}"
     dest: /opt
     remote_src: true
+  when: cri.stat.exists == false
 
 - name: 创建cri-docker软链接
   file:
@@ -31,7 +36,8 @@
     force: true
     state: link
     mode: u+x
-    
+  when: cri.stat.exists == false
+
 - name: 分发cri-docker service文件
   template:
     dest: /lib/systemd/system/cri-docker.service
