@@ -23,22 +23,21 @@
 - debug:
     var: getall.stdout_lines
 
-- name: 创建Dashboard管理员令牌
-  ignore_errors: yes 
-  shell: |
-         kubectl create serviceaccount dashboard-admin -n kubernetes-dashboard
-         kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:dashboard-admin
-
-- name: 获取Dashboard管理员令牌
-  ignore_errors: yes
-  shell: |
-         web='https://NodeIP:30001'
-         token=$(kubectl create token dashboard-admin -n kubernetes-dashboard)
-         echo "访问地址--->$web"
-         echo "令牌内容--->$token" 
-  register: ui
-
-- name: Kubernetes Dashboard登录信息
-  debug:
-    var: ui.stdout_lines
-
+#- name: 创建Dashboard管理员令牌
+#  ignore_errors: yes
+#  shell: |
+#         kubectl create serviceaccount dashboard-admin -n kubernetes-dashboard
+#         kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:dashboard-admin
+#
+#- name: 获取Dashboard管理员令牌
+#  ignore_errors: yes
+#  shell: |
+#         web='https://NodeIP:30001'
+#         token=$(kubectl create token dashboard-admin -n kubernetes-dashboard)
+#         echo "访问地址--->$web"
+#         echo "令牌内容--->$token"
+#  register: ui
+#
+#- name: Kubernetes Dashboard登录信息
+#  debug:
+#    var: ui.stdout_lines
