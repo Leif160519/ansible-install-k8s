@@ -115,3 +115,6 @@ nameserver 114.114.114.114
 nameserver 180.76.76.76
 search localdomain
 ```
+
+## 7、其它组件安装
+欢迎clone和star我的项目：[k8s-deploy](https://github.com/leif160519/k8s-deploy)
