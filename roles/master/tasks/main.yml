@@ -159,10 +159,18 @@
   failed_when: false
   ignore_errors: true
 
-- name: 安装kubetail查看pod日志工具
+- name: 下载kubetail查看pod日志工具
   get_url:
-    url: https://raw.githubusercontent.com/johanhaleby/kubetail/master/kubetail
-    dest: /usr/bin/kubetail
+    url: "{{ kubetail_url }}"
+    dest: "{{ k8s_work_dir }}/bin"
     owner: root
     group: root
     mode: u+x
+
+- name: 创建kubetail二进制文件软链接
+  file:
+    src: "{{ k8s_work_dir }}/bin/kubetail"
+    dest: /usr/bin/kubetail
+    mode: u+x
+    state: link
+    force: true
