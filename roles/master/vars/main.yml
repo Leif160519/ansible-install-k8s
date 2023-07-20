@@ -3,3 +3,4 @@ kube_apiserver_url: https://storage.googleapis.com/kubernetes-release/release/v{
 kube_controller_manager_url: https://storage.googleapis.com/kubernetes-release/release/v{{ k8s_version }}/bin/linux/amd64/kube-controller-manager
 kube_scheduler_url: https://storage.googleapis.com/kubernetes-release/release/v{{ k8s_version }}/bin/linux/amd64/kube-scheduler
 kubectl_url: https://storage.googleapis.com/kubernetes-release/release/v{{ k8s_version }}/bin/linux/amd64/kubectl
+kubetail_url: https://raw.githubusercontent.com/johanhaleby/kubetail/master/kubetail
