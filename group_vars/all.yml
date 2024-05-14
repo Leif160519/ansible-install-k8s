@@ -1,5 +1,5 @@
 # 版本信息
-k8s_version: 1.25.11
+k8s_version: 1.25.16
 
 # 安装目录
 k8s_work_dir: '/opt/kubernetes'
