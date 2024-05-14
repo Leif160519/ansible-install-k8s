@@ -121,6 +121,7 @@ search localdomain
 
 ## 8、其他版本k8s下载地址
 [Download Kubernetes][1]
+
 [Kubernetes][2]
 > 选择`kubernetes-client-linux-amd64.tar.gz`下载即可
 
