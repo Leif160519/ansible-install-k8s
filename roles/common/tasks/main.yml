@@ -47,6 +47,7 @@
 
 - name: 同步系统时间
   shell: ntpdate time.windows.com
+  ignore_errors: true
 
 - name: 设置时间同步定时任务
   cron:
