@@ -9,5 +9,5 @@ ETCDCTL_API=3 {{ etcd_work_dir }}/bin/etcdctl \
 --endpoints=https://{{ inventory_hostname }}:2379 \
 snapshot save {{ etcd_work_dir }}/backup/etcd-snapshot-`date +%Y%m%d`.db
 
-# 备份保留30天
-find {{ etcd_work_dir }}/backup/ -name *.db -mtime +30 -delete
+# 备份保留7天
+find {{ etcd_work_dir }}/backup/ -name *.db -mtime +7 -delete
