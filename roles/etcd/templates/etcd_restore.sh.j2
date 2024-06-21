@@ -1,0 +1,8 @@
+#!/bin/bash
+ETCDCTL_API=3 {{ etcd_work_dir }}/bin/etcdctl \
+--endpoints=https://{{ inventory_hostname }}:2379  \
+--cert={{ etcd_work_dir }}/ssl/server.pem \
+--key={{ etcd_work_dir }}/ssl/server-key.pem \
+--cacert={{ etcd_work_dir }}/ssl/ca.pem \
+--data-dir=/var/lib/etcd/default.etcd
+restore {{ etcd_work_dir }}/backup/etcd-snapshot-`date +%Y%m%d`.db

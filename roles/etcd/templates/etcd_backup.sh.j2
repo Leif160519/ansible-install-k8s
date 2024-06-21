@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ -d {{ etcd_work_dir }}/backup ];then echo "data_dir is exist" ;else mkdir {{ etcd_work_dir }}/backup;fi
+date;
+
+ETCDCTL_API=3 {{ etcd_work_dir }}/bin/etcdctl \
+--cacert={{ etcd_work_dir }}/ssl/ca.pem \
+--cert={{ etcd_work_dir }}/ssl/server.pem \
+--key={{ etcd_work_dir }}/ssl/server-key.pem \
+--endpoints=https://{{ inventory_hostname }}:2379 \
+snapshot save {{ etcd_work_dir }}/backup/etcd-snapshot-`date +%Y%m%d`.db
+
+# 备份保留30天
+find {{ etcd_work_dir }}/backup/ -name *.db -mtime +30 -delete

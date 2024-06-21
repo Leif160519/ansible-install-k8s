@@ -76,7 +76,7 @@
     src: etcd.service.j2
     dest: /lib/systemd/system/etcd.service
   notify: restart etcd
-    
+
 - name: 启动etcd
   systemd:
     name: etcd
@@ -86,13 +86,29 @@
 
 - name: 分发etcd脚本
   template:
-    src: etcd.sh.j2
-    dest: "{{ etcd_work_dir }}/etcd.sh"
+    src: "{{ item }}.j2"
+    dest: "{{ etcd_work_dir }}/{{ item }}"
     mode: u+x
+  with_items:
+    - etcd.sh
+    - etcd_backup.sh
+    - etcd_restore.sh
 
 - name: 获取etcd集群状态
   shell: /bin/bash {{ etcd_work_dir }}/etcd.sh
-  register: status 
+  register: status
 
 - debug:
     var: status.stdout_lines
+
+- name: 设置定时备份etcd数据任务
+  cron:
+    minute: "10"
+    hour: "1"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: "{{ etcd_work_dir }}/etcd_backup.sh"
+    name: "Backup etcd data"
+    state: present
+    user: root
