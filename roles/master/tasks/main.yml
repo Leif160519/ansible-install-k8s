@@ -175,6 +175,30 @@
     state: link
     force: true
 
+- name: 下载kubecolor色彩增强利器
+  get_url:
+    url: "{{ kubecolor_url }}"
+    dest: "{{ k8s_work_dir }}/bin"
+    owner: root
+    group: root
+    mode: u+x
+
+- name: 创建kubecolor二进制文件软连接
+  file:
+    src: "{{ k8s_work_dir }}/bin/kubecolor"
+    dest: /usr/bin/kubecolor
+    mode: u+x
+    state: link
+    force: true
+
+- name: kucolor替换kubectl并设置命令自动提示
+  lineinfile:
+    path: /etc/profile
+    line: "{{ item }}"
+  with_items:
+    - alias kubectl=kubecolor
+    - complete -o default -F __start_kubectl kubecolor
+
 - name: 设置清理日志的定时任务
   cron:
     minute: "10"
