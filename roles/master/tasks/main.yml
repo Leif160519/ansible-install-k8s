@@ -184,6 +184,10 @@
     group: root
     mode: u+x
 
+- name: 重命名kubecolor二进制文件
+  shell: mv {{ k8s_work_dir }}/bin/kubecolor* {{ k8s_work_dir }}/bin/kubecolor
+  ignore_errors: true
+
 - name: 创建kubecolor二进制文件软连接
   file:
     src: "{{ k8s_work_dir }}/bin/kubecolor"
