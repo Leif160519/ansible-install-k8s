@@ -24,6 +24,7 @@
     dest: "{{ etcd_work_dir }}/bin/"
     src: "{{ item }}"
     mode: u+x
+    remote_src: true
   with_items:
     - /tmp/{{ etcd_tag }}/etcd
     - /tmp/{{ etcd_tag }}/etcdctl

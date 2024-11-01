@@ -1,0 +1,22 @@
+global_defs {
+    router_id K8S
+}
+
+vrrp_instance VI_MFS {
+    state {{ 'MASTER' if 'master-01' in node_name else 'BACKUP' }}
+    interface {{ nic }}
+    virtual_router_id 120
+    priority {{ inventory_hostname.split('.')[-1] }}
+    advert_int 1
+    preempt_delay 0
+    nopreempt
+    authentication {
+        auth_type PASS
+        auth_pass 0360
+    }
+    track_script {
+    }
+    virtual_ipaddress {
+        {{ vip }}/24
+    }
+}
