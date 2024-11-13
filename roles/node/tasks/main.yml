@@ -119,7 +119,7 @@
     day: "*"
     month: "*"
     weekday: "*"
-    job: "find /opt/kubernetes/logs -type f -name 'kubelet.*' -mtime +7 -delete"
+    job: "find /opt/kubernetes/logs -type f -mtime +7 -delete"
     name: "Clean kubelet logs"
     state: present
     user: root
