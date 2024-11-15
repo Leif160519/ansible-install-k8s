@@ -47,17 +47,17 @@
     insertbefore: "http {"
     block: |
       stream {
-      
+
           log_format  main  '$remote_addr $upstream_addr - [$time_local] $status $upstream_bytes_sent';
-      
+
           access_log  /var/log/nginx/k8s-access.log  main;
-      
+
           upstream k8s-apiserver {
               {% for ip in groups['master'] %}
               server {{ hostvars[ip].inventory_hostname }}:6443;
               {% endfor %}
           }
-          
+
           server {
              listen 16443;
              proxy_pass k8s-apiserver;

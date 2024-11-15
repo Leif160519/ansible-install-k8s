@@ -15,6 +15,10 @@
     dest: "{{ k8s_work_dir }}/ssl/etcd"
     state: directory
 
+- stat:
+    path: /usr/bin/kubectl
+  register: kubectl
+
 - name: 下载k8s master二进制文件
   get_url:
     url: "{{ item }}"
@@ -25,6 +29,7 @@
     - "{{ kube_controller_manager_url }}"
     - "{{ kube_scheduler_url }}"
     - "{{ kubectl_url }}"
+  when: kubectl.stat.exists == false
 
 - name: 创建kubectl二进制文件软链接
   file:
@@ -38,6 +43,7 @@
     - kube-controller-manager
     - kube-scheduler
     - kubectl
+  when: kubectl.stat.exists == false
 
 - name: 分发k8s证书
   copy:
@@ -160,6 +166,10 @@
   failed_when: false
   ignore_errors: true
 
+- stat:
+    path: /usr/bin/kubetail
+  register: kubetail
+
 - name: 下载kubetail查看pod日志工具
   get_url:
     url: "{{ kubetail_url }}"
@@ -167,6 +177,7 @@
     owner: root
     group: root
     mode: u+x
+  when: kubetail.stat.exists == false
 
 - name: 创建kubetail二进制文件软链接
   file:
@@ -175,6 +186,11 @@
     mode: u+x
     state: link
     force: true
+  when: kubetail.stat.exists == false
+
+- stat:
+    path: /usr/bin/kubecolor
+  register: kubecolor
 
 - name: 下载kubecolor色彩增强利器
   get_url:
@@ -183,10 +199,12 @@
     owner: root
     group: root
     mode: u+x
+  when: kubecolor.stat.exists == false
 
 - name: 重命名kubecolor二进制文件
   shell: mv {{ k8s_work_dir }}/bin/kubecolor* {{ k8s_work_dir }}/bin/kubecolor
   ignore_errors: true
+  when: kubecolor.stat.exists == false
 
 - name: 创建kubecolor二进制文件软连接
   file:
@@ -195,6 +213,7 @@
     mode: u+x
     state: link
     force: true
+  when: kubecolor.stat.exists == false
 
 - name: kucolor替换kubectl并设置命令自动提示
   lineinfile:

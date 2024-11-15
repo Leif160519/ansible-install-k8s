@@ -39,6 +39,10 @@
 #    - static
 #    - host-local
 
+- stat:
+    path: /usr/bin/kubelet
+  register: kubelet
+
 - name: 下载k8s node二进制文件
   get_url:
     url: "{{ item }}"
@@ -47,6 +51,7 @@
   with_items:
     - "{{ kubelet_url }}"
     - "{{ kube_proxy_url }}"
+  when: kubelet.stat.exists == false
 
 - name: 创建k8s node二进制文件软链接
   file:
@@ -58,6 +63,7 @@
   with_items:
     - kubelet
     - kube-proxy
+  when: kubelet.stat.exists == false
 
 - name: 分发k8s证书
   copy:
