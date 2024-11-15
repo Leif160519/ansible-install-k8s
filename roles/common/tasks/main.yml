@@ -8,19 +8,19 @@
         name: firewalld
         state: stopped
         enabled: false
-    
+
     - name: 关闭selinux
       lineinfile:
         dest: /etc/selinux/config
         regexp: "^SELINUX="
         line: "SELINUX=disabled"
-      
+
     - name: 关闭swap
       lineinfile:
         dest: /etc/fstab
         regexp: ".*swap"
         line: ""
-    
+
     - name: 即时生效-selinux
       shell: setenforce 0
   when: ansible_os_family == "RedHat"
@@ -60,3 +60,20 @@
     name: "Time synchronization with windows"
     state: present
     user: root
+
+- name: Ubuntu系列设置DNS解析文件配置
+  block:
+    - name: 创建软链接覆盖原始文件
+      file:
+        src: /run/systemd/resolve/resolv.conf
+        dest: /etc/resolv.conf
+        state: link
+        force: true
+
+    - name: 重启systemd-resolved服务
+      service:
+        name: systemd-resolved
+        enabled: true
+        state: restarted
+        daemon_reload: true
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version(18.04,">=")
