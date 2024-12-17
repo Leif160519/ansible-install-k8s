@@ -11,7 +11,7 @@
     state: started
     enabled: yes
 
-- name: Config docker.json
+- name: Config daemon.json
   template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
