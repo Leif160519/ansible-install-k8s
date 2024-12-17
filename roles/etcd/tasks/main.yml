@@ -9,7 +9,7 @@
     - ssl
 
 - stat:
-    path: "/usr/bin/etcd"
+    path: "{{ etcd_work_dir }}/bin/etcd"
   register: etcd
 
 - name: 下载etcd和etcdctl
