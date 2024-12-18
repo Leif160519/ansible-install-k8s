@@ -23,6 +23,7 @@
 
     - name: 即时生效-selinux
       shell: setenforce 0
+      ignore_errors: true
   when: ansible_os_family == "RedHat"
 
 - name: 即时生效-swap
