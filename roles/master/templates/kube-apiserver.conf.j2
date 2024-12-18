@@ -1,6 +1,5 @@
-KUBE_APISERVER_OPTS="--logtostderr=false \
+KUBE_APISERVER_OPTS=" \
 --v=2 \
---log-dir={{ k8s_work_dir }}/logs \
 --etcd-servers={% for host in groups['etcd'] %}https://{{ hostvars[host].inventory_hostname }}:2379{% if not loop.last %},{% endif %}{% endfor %} \
 --bind-address={{ inventory_hostname }} \
 --secure-port=6443 \

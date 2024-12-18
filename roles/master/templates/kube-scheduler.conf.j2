@@ -1,6 +1,5 @@
-KUBE_SCHEDULER_OPTS="--logtostderr=false \
+KUBE_SCHEDULER_OPTS="\
 --v=2 \
---log-dir={{ k8s_work_dir }}/logs \
 --leader-elect \
 --kubeconfig={{ k8s_work_dir }}/cfg/kube-scheduler.kubeconfig \
 --bind-address=127.0.0.1"

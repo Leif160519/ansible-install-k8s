@@ -1,6 +1,5 @@
-KUBELET_OPTS="--logtostderr=false \
+KUBELET_OPTS="\
 --v=4 \
---log-dir={{ k8s_work_dir }}/logs \
 --hostname-override={{ node_name }} \
 --kubeconfig={{ k8s_work_dir }}/cfg/kubelet.kubeconfig \
 --bootstrap-kubeconfig={{ k8s_work_dir }}/cfg/bootstrap.kubeconfig \
@@ -8,4 +7,4 @@ KUBELET_OPTS="--logtostderr=false \
 --cert-dir={{ k8s_work_dir }}/ssl \
 --container-runtime-endpoint=unix:///var/run/cri-dockerd.sock \
 --cgroup-driver=systemd \
---pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.7"
+--pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.9"

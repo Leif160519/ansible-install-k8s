@@ -1,5 +1,4 @@
-KUBE_PROXY_OPTS="--logtostderr=false \
+KUBE_PROXY_OPTS=" \
 --v=4 \
---log-dir={{ k8s_work_dir }}/logs \
 --hostname-override={{ node_name }} \
 --config={{ k8s_work_dir }}/cfg/kube-proxy-config.yml"
