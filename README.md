@@ -2,14 +2,14 @@
 魔改自阿良老师的项目 https://github.com/lizhenliang/ansible-install-k8s
 - 修改了一些镜像的地址为国内能下载到的源
 - 新增了对Debian系列的支持
-- 升级k8s版本至1.25.16
+- 升级k8s版本至1.29.8（实际支持的版本范围1.23.x-1.32.x）
 - 将离线版安装方式改为在线版，摆脱对百度云的依赖
 - 支持k8s安装版本选择功能
 - 新增节点时间同步的定时任务
 - 新增ETCD数据备份的定时任务
 - 新增清理集群日志的定时任务，避免磁盘压力
 
-# Kubernetes v1.25.16 企业级高可用集群自动部署（在线版）
+# Kubernetes v1.29.8 企业级高可用集群自动部署（在线版）
 >### 注：确保所有节点系统时间一致
 >### 操作系统要求：CentOS7.x_x64 && > Ubuntu 18.04 LTS
 
@@ -41,7 +41,7 @@
 
 ```
 # vim group_vars/all.yml
-k8s_version: 1.25.16
+k8s_version: 1.29.8
 ...
 cert_hosts:
   k8s:
@@ -68,11 +68,11 @@ cert_hosts:
 ```
 # kubectl get node
 NAME            STATUS   ROLES    AGE   VERSION
-k8s-master-01   Ready    <none>   54m   v1.25.16
-k8s-master-02   Ready    <none>   54m   v1.25.16
-k8s-node-01     Ready    <none>   54m   v1.25.16
-k8s-node-02     Ready    <none>   54m   v1.25.16
-k8s-node-03     Ready    <none>   54m   v1.25.16
+k8s-master-01   Ready    <none>   54m   v1.29.8
+k8s-master-02   Ready    <none>   54m   v1.29.8
+k8s-node-01     Ready    <none>   54m   v1.29.8
+k8s-node-02     Ready    <none>   54m   v1.29.8
+k8s-node-03     Ready    <none>   54m   v1.29.8
 ```
 
 ## 6、其他
@@ -99,7 +99,7 @@ k8s-node-03     Ready    <none>   54m   v1.25.16
 ### 6.3 所有HTTPS证书存放路径
 部署产生的证书都会存放到目录“ansible-install-k8s/playbooks/ssl”，一定要保存好，后面还会用到~
 
-### 6.4 若coredns一直起不来问题解决
+### 6.4 若coredns一直起不来问题解决(本脚本中已包含`roles/common/tasks/main.yaml`)
 清排查本地dns配置:
 ```
 cat /etc/resolv.conf
