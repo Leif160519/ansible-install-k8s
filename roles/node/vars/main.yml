@@ -1,3 +1,3 @@
 ---
-kubelet_url: {{ k8s_url }}/kubelet
-kube_proxy_url: {{ k8s_url }}/kube-proxy
+kubelet_url: "{{ k8s_url }}/kubelet"
+kube_proxy_url: "{{ k8s_url }}/kube-proxy"
