@@ -117,6 +117,23 @@ nameserver 180.76.76.76
 search localdomain
 ```
 
+### 6.4 如果下载官方二进制程序有困难需要配置代理
+在`playbooks/muti-master-deploy.yml`或者`playbooks/single-master-deploy.yml`中添加如下代理环境变量的配置即可
+```
+...略
+- name: 4.部署K8S Master
+  hosts: master
+  environment:                              # 添加环境变量配置
+    HTTP_PROXY: http://xx.xx.xx.xx:3128     # 配置http_proxy环境变量
+    HTTPS_PROXY: http://xx.xx.xx.xx:3128    # 配置https_proxy环境变量
+  roles:
+    - node
+  tags: node
+...略
+```
+
+> 端口可能会略有差异，有的可能是7890等
+
 ## 7、其它组件安装
 欢迎clone和star我的项目：[k8s-deploy](https://github.com/leif160519/k8s-deploy)
 
