@@ -10,6 +10,11 @@
   with_fileglob:
     - "*.yaml"
 
+- name: 拷贝calico.yaml到master
+  template:
+    src: calico.yaml.j2
+    dest: "{{ k8s_work_dir }}/yaml/calico.yaml"
+
 - name: 部署Calico,CoreDNS
   ignore_errors: yes
   shell: |
