@@ -14,7 +14,7 @@ cluster_domain: 'cluster.local'
 
 # 高可用，如果部署单Master，该项忽略
 vip: '192.168.31.110'
-nic: 'enp2s0'  # 修改为实际内网网卡名
+nic: "{{ ansible_default_ipv4['interface'] }}" # 自动获取网卡名称
 
 # 自签证书可信任IP列表，为方便扩展，可添加多个预留IP
 cert_hosts:
