@@ -50,10 +50,13 @@ cert_hosts:
 ## 4、一键部署
 ### 4.1 架构图
 - 单Master架构
+
 ![avatar](img/single-master.jpg)
 
 - 多Master架构
+
 ![avatar](img/multi-master.jpg)
+
 ### 4.2 部署命令
 单Master版：
 ```
