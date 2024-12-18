@@ -1,5 +1,9 @@
 # 版本信息
-k8s_version: 1.25.16
+k8s_version: 1.29.12
+
+# 二进制文件下载地址
+# k8s_url: https://storage.googleapis.com/kubernetes-release/release/v{{ k8s_version }}/bin/linux/amd64 # 这个版本不怎么全
+k8s_url: https://dl.k8s.io/v{{ k8s_version }}/bin/linux/amd64 # 这个版本最全
 
 # 安装目录
 k8s_work_dir: '/opt/kubernetes'
