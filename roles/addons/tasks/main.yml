@@ -7,8 +7,9 @@
   template:
     src: "{{ item }}"
     dest: "{{ k8s_work_dir }}/yaml/{{ item | basename | regex_replace('.j2') }}"
-  with_fileglob:
-    - "*.yaml.j2"
+  with_items:
+    - calico.yaml.j2
+    - coredns.yaml.j2
 
 - name: 部署Calico,CoreDNS
   ignore_errors: yes
