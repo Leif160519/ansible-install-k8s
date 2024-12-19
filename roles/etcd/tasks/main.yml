@@ -32,7 +32,7 @@
 
 - name: 创建etcd和etcdctl软链接
   file:
-    src: "/tmp/{{ etcd_tag }}/{{ item }}"
+    src: "{{ etcd_work_dir }}/bin/{{ item }}"
     dest: "/usr/bin/{{ item }}"
     state: link
     mode: u+x
