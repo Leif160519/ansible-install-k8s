@@ -4,16 +4,11 @@
 #  shell: kubectl certificate approve $(kubectl get csr |awk 'NR!=1{print $1}')
 
 - name: 拷贝YAML文件到Master
-  copy:
-    src: "{{ item }}"
-    dest: "{{ k8s_work_dir }}/yaml"
-  with_fileglob:
-    - "*.yaml"
-
-- name: 拷贝calico.yaml到master
   template:
-    src: calico.yaml.j2
-    dest: "{{ k8s_work_dir }}/yaml/calico.yaml"
+    src: "{{ item }}"
+    dest: "{{ k8s_work_dir }}/yaml/{{ item | basename | regex_replace('.j2') }}"
+  with_fileglob:
+    - "*.yaml.j2"
 
 - name: 部署Calico,CoreDNS
   ignore_errors: yes
