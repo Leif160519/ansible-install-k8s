@@ -1,6 +1,6 @@
 [Unit]
 Description=Kubernetes Proxy
-After=network.target
+After=network.target kubelet.service
 
 [Service]
 EnvironmentFile={{ k8s_work_dir }}/cfg/kube-proxy.conf
