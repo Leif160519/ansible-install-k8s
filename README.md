@@ -109,14 +109,12 @@ cat /etc/resolv.conf
 ```
 若返回的结果有`127.0.0.53`,则需要额外执行一个配置:
 ```
-git clone https://github.com/leif160519/ansible-linux.git
-cd ansible-linux.git
-ansible-playbook playbooks/config.yml -t network -l pro.k8s
+ansible-playbook playbooks/single-master-deploy.yml -t docker
 ```
 执行完成之后，再次检查dns配置，显示如下内容代表正常，此时coredns会自动恢复正常，若不能自动回复，删除pod之后集群会自动生成一个新的pod
 ```
 nameserver 114.114.114.114
-nameserver 180.76.76.76
+nameserver 223.5.5.5
 search localdomain
 ```
 
