@@ -5,6 +5,8 @@ Documentation=https://github.com/kubernetes/kubernetes
 [Service]
 EnvironmentFile={{ k8s_work_dir }}/cfg/kube-apiserver.conf
 ExecStart=/usr/bin/kube-apiserver $KUBE_APISERVER_OPTS
+StandardOutput=append:{{ k8s_work_dir }}/logs/kube-apiserver.log
+StandardError=append:{{ k8s_work_dir }}/logs/kube-apiserver.log
 Restart=on-failure
 
 [Install]

@@ -5,6 +5,8 @@ Documentation=https://github.com/kubernetes/kubernetes
 [Service]
 EnvironmentFile={{ k8s_work_dir }}/cfg/kube-scheduler.conf
 ExecStart=/usr/bin/kube-scheduler $KUBE_SCHEDULER_OPTS
+StandardOutput=append:{{ k8s_work_dir }}/logs/kube-scheduler.log
+StandardError=append:{{ k8s_work_dir }}/logs/kube-scheduler.log
 Restart=on-failure
 
 [Install]

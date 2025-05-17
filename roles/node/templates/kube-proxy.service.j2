@@ -5,6 +5,8 @@ After=network.target kubelet.service
 [Service]
 EnvironmentFile={{ k8s_work_dir }}/cfg/kube-proxy.conf
 ExecStart=/usr/bin/kube-proxy $KUBE_PROXY_OPTS
+StandardOutput=append:{{ k8s_work_dir }}/logs/kube-proxy.log
+StandardError=append:{{ k8s_work_dir }}/logs/kube-proxy.log
 Restart=on-failure
 LimitNOFILE=65536
 

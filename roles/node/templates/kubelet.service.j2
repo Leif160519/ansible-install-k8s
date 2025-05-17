@@ -6,6 +6,8 @@ After=docker.service cri-docker.service
 EnvironmentFile={{ k8s_work_dir }}/cfg/kubelet.conf
 ExecStart=/usr/bin/kubelet $KUBELET_OPTS
 Restart=on-failure
+StandardOutput=append:{{ k8s_work_dir }}/logs/kubelet.log
+StandardError=append:{{ k8s_work_dir }}/logs/kubelet.log
 LimitNOFILE=65536
 
 [Install]
