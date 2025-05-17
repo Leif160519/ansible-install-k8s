@@ -7,4 +7,7 @@ KUBELET_OPTS="\
 --cert-dir={{ k8s_work_dir }}/ssl \
 --container-runtime-endpoint=unix:///var/run/cri-dockerd.sock \
 --cgroup-driver=systemd \
+{% if k8s_version is version('1.33.0','>=') %}
+--feature-gates=InPlacePodVerticalScaling=true \
+{% endif %}
 --pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.9"
