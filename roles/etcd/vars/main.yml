@@ -1,5 +1,5 @@
 ---
-etcd_version: 3.5.8
+etcd_version: 3.6.0
 etcd_tag: etcd-v{{ etcd_version }}-linux-amd64
 etcd_url: https://github.com/etcd-io/etcd/releases/download/v{{ etcd_version }}/{{ etcd_tag }}.tar.gz
 
