@@ -1,10 +1,14 @@
 kind: KubeProxyConfiguration
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
+{% if k8s_version is version('1.33.0','>=') %}
+featureGates:
+  InPlacePodVerticalScaling: true
+{% endif %}
 bindAddress: 0.0.0.0
 metricsBindAddress: {{ inventory_hostname }}:10249
 clientConnection:
   kubeconfig: {{ k8s_work_dir }}/cfg/kube-proxy.kubeconfig
-hostnameOverride: {{ node_name }} 
+hostnameOverride: {{ node_name }}
 clusterCIDR: {{ pod_cidr }}
 #mode: ipvs
 #ipvs:
