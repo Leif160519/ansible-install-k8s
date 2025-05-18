@@ -30,9 +30,6 @@ KUBE_APISERVER_OPTS=" \
 --requestheader-group-headers=X-Remote-Group \
 --requestheader-username-headers=X-Remote-User \
 --enable-aggregator-routing=true \
-{% if k8s_version is version('1.33.0','>=') %}
---feature-gates=InPlacePodVerticalScaling=true \
-{% endif %}
 --audit-log-maxage=30 \
 --audit-log-maxbackup=3 \
 --audit-log-maxsize=100 \

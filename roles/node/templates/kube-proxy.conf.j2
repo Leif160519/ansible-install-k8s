@@ -1,7 +1,4 @@
 KUBE_PROXY_OPTS=" \
 --v=4 \
 --hostname-override={{ node_name }} \
-{% if k8s_version is version('1.33.0','>=') %}
---feature-gates=InPlacePodVerticalScaling=true \
-{% endif %}
 --config={{ k8s_work_dir }}/cfg/kube-proxy-config.yml"

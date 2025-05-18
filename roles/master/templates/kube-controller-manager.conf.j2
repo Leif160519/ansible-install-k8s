@@ -10,7 +10,4 @@ KUBE_CONTROLLER_MANAGER_OPTS=" \
 --cluster-signing-key-file={{ k8s_work_dir }}/ssl/ca-key.pem  \
 --root-ca-file={{ k8s_work_dir }}/ssl/ca.pem \
 --service-account-private-key-file={{ k8s_work_dir }}/ssl/ca-key.pem \
-{% if k8s_version is version('1.33.0','>=') %}
---feature-gates=InPlacePodVerticalScaling=true \
-{% endif %}
 --cluster-signing-duration=87600h0m0s"

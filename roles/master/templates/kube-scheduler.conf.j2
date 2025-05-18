@@ -2,7 +2,4 @@ KUBE_SCHEDULER_OPTS="\
 --v=2 \
 --leader-elect \
 --kubeconfig={{ k8s_work_dir }}/cfg/kube-scheduler.kubeconfig \
-{% if k8s_version is version('1.33.0','>=') %}
---feature-gates=InPlacePodVerticalScaling=true \
-{% endif %}
 --bind-address=127.0.0.1"

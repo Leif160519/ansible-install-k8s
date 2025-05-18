@@ -1,16 +1,12 @@
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
-{% if k8s_version is version('1.33.0','>=') %}
-featureGates:
-  InPlacePodVerticalScaling: true
-{% endif %}
 address: 0.0.0.0
 port: 10250
 readOnlyPort: 10255
 cgroupDriver: cgroupfs
 clusterDNS:
 - {{ cluster_dns }}
-clusterDomain: {{ cluster_domain }} 
+clusterDomain: {{ cluster_domain }}
 failSwapOn: false
 authentication:
   anonymous:
@@ -19,7 +15,7 @@ authentication:
     cacheTTL: 2m0s
     enabled: true
   x509:
-    clientCAFile: {{ k8s_work_dir }}/ssl/ca.pem 
+    clientCAFile: {{ k8s_work_dir }}/ssl/ca.pem
 authorization:
   mode: Webhook
   webhook:
