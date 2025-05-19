@@ -33,4 +33,5 @@ KUBE_APISERVER_OPTS=" \
 --audit-log-maxage=30 \
 --audit-log-maxbackup=3 \
 --audit-log-maxsize=100 \
+--audit-policy-file={{ k8s_work_dir }}/audit/audit-policy.yaml \
 --audit-log-path={{ k8s_work_dir }}/logs/k8s-audit.log"

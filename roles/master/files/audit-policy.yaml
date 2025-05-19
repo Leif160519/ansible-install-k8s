@@ -1,0 +1,17 @@
+apiVersion: audit.k8s.io/v1
+kind: Policy
+omitStages: ["RequestReceived"]  # 统一管理审计阶段过滤
+rules:
+  - level: RequestResponse
+    verbs: ["create", "delete", "patch"]
+    resources:
+      - group: ""
+        resources: ["secrets", "configmaps"]
+      - group: "rbac.authorization.k8s.io"
+        resources: ["roles", "rolebindings"]
+  - level: None  # 排除系统组件
+    users: ["system:kube-controller-manager", "system:kube-proxy"]
+  - level: Request
+    verbs: ["create", "delete"]
+    resources: [{"group": "", "resources": ["pods"]}]
+  - level: Metadata  # 兜底规则

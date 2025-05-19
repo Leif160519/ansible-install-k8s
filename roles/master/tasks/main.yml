@@ -6,6 +6,7 @@
   with_items:
     - bin
     - cfg
+    - audit
     - ssl
     - logs
     - yaml
@@ -74,6 +75,11 @@
   copy:
     src: token.csv
     dest: "{{ k8s_work_dir }}/cfg"
+
+- name: 分发策略文件
+  copy:
+    src: audit-policy.yaml
+    dest: "{{ k8s_work_dir }}/audit"
 
 - name: 分发k8s配置文件
   template:
