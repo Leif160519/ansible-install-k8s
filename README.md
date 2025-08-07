@@ -90,10 +90,13 @@ k8s-node-03     Ready    <none>   54m   v1.29.12
 ### 6.2 节点扩容
 1）修改hosts，添加新节点ip
 ```
-# vi hosts
+# vim hosts
 ...
 [newnode]
 192.168.31.85 node_name=k8s-node-04
+
+# vim group_vars/all.yml
+添加新节点的ip地址
 ```
 2）执行部署
 ```
