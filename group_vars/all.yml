@@ -1,5 +1,5 @@
 # 版本信息
-k8s_version: 1.29.12
+k8s_version: 1.34.2
 
 # 内核资源隔离驱动
 cgroupdriver: systemd
@@ -11,6 +11,14 @@ k8s_url: https://dl.k8s.io/v{{ k8s_version }}/bin/linux/amd64 # 这个版本最�
 # 安装目录
 k8s_work_dir: '/opt/kubernetes'
 etcd_work_dir: '/opt/etcd'
+
+# calico镜像地址：
+# calico_node_img: docker.io/calico/node:v3.25.0
+# calico_cni_img: docker.io/calico/cni:v3.25.0
+# calico_kube-controllers_img: docker.io/calico/kube-controllers:v3.25.0
+calico_node_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/node:v3.25.0
+calico_cni_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/cni:v3.25.0
+calico_kube-controllers_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/kube-controllers:v3.25.0
 
 # 集群网络
 service_cidr: '10.0.0.0/24'

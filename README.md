@@ -2,14 +2,14 @@
 魔改自阿良老师的项目 https://github.com/lizhenliang/ansible-install-k8s
 - 修改了一些镜像的地址为国内能下载到的源
 - 新增了对Debian系列的支持
-- 升级k8s版本至1.29.12（实际支持的版本范围1.23.x-1.33.x）
+- 升级k8s版本至1.34.2（实际支持的版本范围1.23.x-1.34.x）
 - 将离线版安装方式改为在线版，摆脱对百度云的依赖
 - 支持k8s安装版本选择功能
 - 新增节点时间同步的定时任务
 - 新增ETCD数据备份的定时任务
 - 新增清理集群日志的定时任务，避免磁盘压力
 
-# Kubernetes v1.29.12 企业级高可用集群自动部署（在线版）
+# Kubernetes v1.34.2 企业级高可用集群自动部署（在线版）
 >### 注：确保所有节点系统时间一致
 >### 操作系统要求：CentOS7.x_x64 && > Ubuntu 18.04 LTS
 
@@ -41,7 +41,7 @@
 
 ```
 # vim group_vars/all.yml
-k8s_version: 1.29.12
+k8s_version: 1.34.2
 ...
 cert_hosts:
   k8s:
@@ -71,11 +71,11 @@ cert_hosts:
 ```
 # kubectl get node
 NAME            STATUS   ROLES    AGE   VERSION
-k8s-master-01   Ready    <none>   54m   v1.29.12
-k8s-master-02   Ready    <none>   54m   v1.29.12
-k8s-node-01     Ready    <none>   54m   v1.29.12
-k8s-node-02     Ready    <none>   54m   v1.29.12
-k8s-node-03     Ready    <none>   54m   v1.29.12
+k8s-master-01   Ready    <none>   54m   v1.34.2
+k8s-master-02   Ready    <none>   54m   v1.34.2
+k8s-node-01     Ready    <none>   54m   v1.34.2
+k8s-node-02     Ready    <none>   54m   v1.34.2
+k8s-node-03     Ready    <none>   54m   v1.34.2
 ```
 
 ## 6、其他
@@ -149,6 +149,10 @@ search localdomain
 ## 9、关于etcd的备份和恢复
 - [readme][3]
 
+## 10、若calico和coredns的镜像拉取失败，可以才下列镜像仓库中查找替代版（镜像tag版本需保持一致，高版本可能会导致无法正常启动pod)
+- [渡渡鸟镜像同步站][4]
+
 [1]: https://www.downloadkubernetes.com/
 [2]: https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#downloads-for-v12516
 [3]: ./roles/etcd/readme.md
+[4]: https://docker.aityp.com/
