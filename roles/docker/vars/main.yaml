@@ -4,7 +4,6 @@ size: 24
 mirrors: http://cloudsx.top
 log_max_file: 3
 log_max_size: 10m
-cgroupdriver: systemd
 
 cri_docker_version: 0.3.16
 cri_docker_tag: cri-dockerd-{{ cri_docker_version }}.amd64
