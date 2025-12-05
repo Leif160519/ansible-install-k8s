@@ -7,10 +7,6 @@
             "max-file": "{{ log_max_file }}",
             "max-size": "{{ log_max_size }}"
         },
-    "registry-mirrors":
-        [
-            "{{ mirrors }}"
-        ],
     "exec-opts": ["native.cgroupdriver={{ cgroupdriver }}"],
     "storage-driver": "overlay2"
 }
