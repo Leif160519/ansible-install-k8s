@@ -11,6 +11,8 @@ ExecReload=/bin/kill -s HUP $MAINPID
 TimeoutSec=0
 RestartSec=2
 Restart=always
+StandardOutput=append:/opt/cri-dockerd/logs/cri-dockerd.log
+StandardError=append:/opt/cri-dockerd/logs/cri-dockerd.log
 
 [Install]
 WantedBy=multi-user.target

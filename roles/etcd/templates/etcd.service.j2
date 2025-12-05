@@ -16,6 +16,8 @@ ExecStart={{ etcd_work_dir }}/bin/etcd \
         --peer-trusted-ca-file={{ etcd_work_dir }}/ssl/ca.pem
 Restart=on-failure
 LimitNOFILE=65536
+StandardOutput=append:/opt/etcd/logs/etcd.log
+StandardError=append:/opt/etcd/logs/etcd.log
 
 [Install]
 WantedBy=multi-user.target
