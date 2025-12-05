@@ -49,3 +49,32 @@
     enabled: true
     state: started
     daemon_reload: true
+
+- stat:
+    path: /usr/bin/crictl
+  register: crictl
+
+- file:
+    path: /opt/crictl
+    state: directory
+
+- name: 下载crictl二进制包
+  unarchive:
+    src: "{{ crictl_url }}"
+    dest: /opt/crictl
+    remote_src: true
+  when: crictl.stat.exists == false
+
+- name: 创建crictl软连接
+  file:
+    src: /opt/crictl/crictl
+    dest: /usr/bin/crictl
+    force: true
+    state: link
+    mode: u+x
+  when: crictl.stat.exists == false
+
+- name: 创建crictl配置文件
+  template:
+    dest: /etc/crictl.yaml
+    src: crictl.yaml.j2

@@ -9,3 +9,7 @@ cgroupdriver: systemd
 cri_docker_version: 0.3.16
 cri_docker_tag: cri-dockerd-{{ cri_docker_version }}.amd64
 cri_docker_url: https://github.com/Mirantis/cri-dockerd/releases/download/v{{ cri_docker_version }}/{{ cri_docker_tag }}.tgz
+
+crictl_version: 1.34.0
+crictl_tag: crictl-v{{ crictl_version }}-linux-amd64
+crictl_url: https://github.com/kubernetes-sigs/cri-tools/releases/download/v{{ crictl_version }}/{{ crictl_tag }}.tar.gz
