@@ -37,7 +37,7 @@
   tags: ha
 
 - name: 6.部署K8S Node
-  hosts: k8s 
+  hosts: k8s
   roles:
     - node
   tags: node
@@ -47,3 +47,9 @@
   roles:
     - addons
   tags: addons
+
+- name: 8.定义角色
+  hosts: k8s
+  roles:
+    - roles
+  tags: roles

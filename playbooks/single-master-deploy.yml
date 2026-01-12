@@ -42,3 +42,9 @@
   roles:
     - addons
   tags: addons
+
+- name: 7.定义角色
+  hosts: k8s
+  roles:
+    - roles
+  tags: roles

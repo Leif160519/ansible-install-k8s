@@ -1,0 +1,16 @@
+# 确保执行ansible的节点，添加了master节点的host记录
+- name: 定义节点ROLES属性
+  shell: |
+    kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/master=
+  delegate_to: 'k8s-master-01'
+  failed_when: false
+  ignore_errors: true
+  when: inventory_hostname is match "k8s-master"
+
+- name: 定义节点ROLES属性
+  shell: |
+    kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/worker=
+  delegate_to: "k8s-master-01"
+  failed_when: false
+  ignore_errors: true
+  when: not (inventory_hostname is match "k8s-master")
