@@ -13,9 +13,9 @@
 [etcd]
 #192.168.31.80 etcd_name=etcd-2
 192.168.31.81 etcd_name=etcd-1
-192.168.31.82 etcd_name=etcd-3
-192.168.31.83 etcd_name=etcd-4
-192.168.31.84 etcd_name=etcd-5
+192.168.31.82 etcd_name=etcd-2
+192.168.31.83 etcd_name=etcd-3
+192.168.31.84 etcd_name=etcd-4
 
 [lb]
 # 如果部署单Master，该项忽略
