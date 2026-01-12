@@ -1,5 +1,5 @@
 # 版本信息
-k8s_version: 1.34.2
+k8s_version: 1.34.3
 
 # 内核资源隔离驱动
 cgroupdriver: systemd
