@@ -15,10 +15,10 @@ etcd_work_dir: '/opt/etcd'
 # calico镜像地址：
 # calico_node_img: docker.io/calico/node:v3.25.0
 # calico_cni_img: docker.io/calico/cni:v3.25.0
-# calico_kube-controllers_img: docker.io/calico/kube-controllers:v3.25.0
+# calico_kube_controllers_img: docker.io/calico/kube-controllers:v3.25.0
 calico_node_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/node:v3.25.0
 calico_cni_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/cni:v3.25.0
-calico_kube-controllers_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/kube-controllers:v3.25.0
+calico_kube_controllers_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/kube-controllers:v3.25.0
 
 # 集群网络
 service_cidr: '10.0.0.0/24'

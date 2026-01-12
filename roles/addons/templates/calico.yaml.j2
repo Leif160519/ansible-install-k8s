@@ -4756,7 +4756,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: calico-kube-controllers
-          image: "{{ calico_kube-controllers_img }}"
+          image: "{{ calico_kube_controllers_img }}"
           imagePullPolicy: IfNotPresent
           env:
             # Choose which controllers to run.
