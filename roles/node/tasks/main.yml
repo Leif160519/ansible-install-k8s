@@ -111,13 +111,6 @@
     - kubelet
     - kube-proxy
 
-- name: 定义节点ROLES属性
-  shell: |
-    kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/worker=
-  delegate_to: "k8s-master-01"
-  failed_when: false
-  ignore_errors: true
-
 - name: 设置清理日志的定时任务
   cron:
     minute: "10"

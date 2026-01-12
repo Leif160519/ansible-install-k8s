@@ -164,13 +164,6 @@
     - export KUBECONFIG=/root/.kube/config
     - source <(kubectl completion bash)
 
-- name: 定义节点ROLES属性
-  shell: |
-    kubectl label nodes "{{ node_name }}" node-role.kubernetes.io/master=
-  delegate_to: 'k8s-master-01'
-  failed_when: false
-  ignore_errors: true
-
 - stat:
     path: /usr/bin/kubetail
   register: kubetail
