@@ -119,6 +119,14 @@
     month: "*"
     weekday: "*"
     job: "find /opt/kubernetes/logs -type f -mtime +7 -delete"
-    name: "Clean kubelet logs"
+    name: "Clean kubernetes logs"
     state: present
     user: root
+
+  cron:
+    minute: "10"
+    hour: "1"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: "truncate -s 0 /opt/kubernetes/logs/kubelet.log"
