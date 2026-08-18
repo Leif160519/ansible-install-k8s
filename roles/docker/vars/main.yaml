@@ -4,7 +4,7 @@ size: 24
 log_max_file: 3
 log_max_size: 10m
 
-cri_docker_version: 0.3.16
+cri_docker_version: 0.4.4
 cri_docker_tag: cri-dockerd-{{ cri_docker_version }}.amd64
 cri_docker_url: https://github.com/Mirantis/cri-dockerd/releases/download/v{{ cri_docker_version }}/{{ cri_docker_tag }}.tgz
 
