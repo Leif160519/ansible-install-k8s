@@ -40,7 +40,6 @@
     line: "{{ hostvars[item].inventory_hostname }} {{ hostvars[item].node_name }}"
     state: present
   loop: "{{ groups['k8s'] }}"
-  delegate_to: "{{ item }}"
 
 - name: 安装ntpdate
   package:
