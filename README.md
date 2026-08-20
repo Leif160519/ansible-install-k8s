@@ -121,7 +121,7 @@ nameserver 223.5.5.5
 search localdomain
 ```
 
-### 6.4 如果下载官方二进制程序有困难需要配置代理
+### 6.5 如果下载官方二进制程序有困难需要配置代理
 在`playbooks/muti-master-deploy.yml`或者`playbooks/single-master-deploy.yml`中添加如下代理环境变量的配置即可
 ```
 ...略
@@ -137,6 +137,11 @@ search localdomain
 ```
 
 > 端口可能会略有差异，有的可能是7890等
+
+### 6.5 证书到期续签
+在`playbooks/ssl`下的etcd目录中，执行`generate_etcd_cert.sh`重新签发etcd证书
+在`playbooks/ssl`下的k8s目录中，执行`generate_k8s_cert.sh`重新签发k8s证书
+最后执行`ansible-playbook playbooks/single-master-deploy.yml  -t master -t node` 重新下发新证书并自动重启相关服务即可
 
 ## 7、其它组件安装
 欢迎clone和star我的项目：[k8s-deploy](https://github.com/leif160519/k8s-deploy)
