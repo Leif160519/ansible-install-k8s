@@ -99,9 +99,14 @@
 - name: 获取etcd集群状态
   shell: /bin/bash {{ etcd_work_dir }}/etcd.sh
   register: status
+  run_once: true
+  ignore_errors: true
+  delegate_to: "{{ groups.master.0 }}"
 
 - debug:
     var: status.stdout_lines
+  delegate_to: localhost
+  run_once: true
 
 - name: 设置定时备份etcd数据任务
   cron:
