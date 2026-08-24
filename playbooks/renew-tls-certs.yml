@@ -113,3 +113,11 @@
       with_items:
         - kube-proxy
         - kubelet
+
+- name: 5.重启Calico Pod,否则新pod会一直卡在ContainerCreating状态
+  hosts: master
+  tags: master
+  tasks:
+    - shell: kubectl delete pod -n kube-system -l k8s-app=calico-node
+      ignore_errors: true
+
