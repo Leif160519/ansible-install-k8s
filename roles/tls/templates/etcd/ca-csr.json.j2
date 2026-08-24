@@ -1,17 +1,17 @@
 {
     "CA": {
-        "expiry":"876000h"
+        "expiry":"{{ etcd_ca_expriy }}"
      },
-    "CN": "etcd CA",
+    "CN": "{{ etcd_cn }}",
     "key": {
         "algo": "rsa",
         "size": 2048
     },
     "names": [
         {
-            "C": "CN",
-            "L": "Beijing",
-            "ST": "Beijing"
+            "C": "{{ etcd_names_c }}",
+            "L": "{{ etcd_names_l }}",
+            "ST": "{{ etcd_names_st }}"
         }
     ]
 }

@@ -73,7 +73,9 @@
     - ca.pem
     - kube-proxy.pem
     - kube-proxy-key.pem
-  notify: restart kube-proxy
+  notify:
+    - restart kubelet
+    - restart kube-proxy
 
 - name: 分发k8s配置文件
   template:

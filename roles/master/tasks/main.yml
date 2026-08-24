@@ -61,6 +61,10 @@
     - kube-scheduler-key.pem
     - admin.pem
     - admin-key.pem
+  notify:
+    - restart kube-apiserver
+    - restart kube-controller-manager
+    - restart kube-scheduler
 
 - name: 分发etcd证书
   copy:
@@ -70,6 +74,10 @@
     - ca.pem
     - server.pem
     - server-key.pem
+  notify:
+    - restart kube-apiserver
+    - restart kube-controller-manager
+    - restart kube-scheduler
 
 - name: 分发token文件
   copy:
@@ -91,6 +99,10 @@
     - kube-scheduler.conf.j2
     - kube-controller-manager.kubeconfig.j2
     - kube-scheduler.kubeconfig.j2
+  notify:
+    - restart kube-apiserver
+    - restart kube-controller-manager
+    - restart kube-scheduler
 
 - name: 分发service文件
   template:
@@ -100,6 +112,10 @@
     - kube-apiserver.service.j2
     - kube-controller-manager.service.j2
     - kube-scheduler.service.j2
+  notify:
+    - restart kube-apiserver
+    - restart kube-controller-manager
+    - restart kube-scheduler
 
 - name: 启动k8s master组件
   systemd:

@@ -1,19 +1,19 @@
 {
     "CA": {
-        "expiry":"876000h"
+        "expiry":"{{ k8s_ca_expiry }}"
      },
-    "CN": "kubernetes",
+    "CN": "{{ k8s_cn }}",
     "key": {
         "algo": "rsa",
         "size": 2048
     },
     "names": [
         {
-            "C": "CN",
-            "L": "Beijing",
-            "ST": "Beijing",
-      	    "O": "k8s",
-            "OU": "System"
+            "C": "{{ k8s_names_c }}",
+            "L": "{{ k8s_names_l }}",
+            "ST": "{{ k8s_names_st }}",
+            "O": "{{ k8s_names_o }}",
+            "OU": "{{ k8s_names_ou }}"
         }
     ]
 }

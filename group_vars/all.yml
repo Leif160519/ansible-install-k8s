@@ -26,6 +26,22 @@ calico_kube_controllers_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/
 pause_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/registry.k8s.io/pause:3.9
 coredns_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/registry.k8s.io/coredns/coredns:v1.8.6
 
+
+# 证书配置
+etcd_ca_expriy: "876000h"
+etcd_cn: "etcd CA"
+etcd_names_c: "CN"
+etcd_names_l: "Beijing"
+etcd_names_st: "Beijing"
+
+k8s_ca_expiry: "876000h"
+k8s_cn: "kubernetes"
+k8s_names_c: "CN"
+k8s_names_l: "Beijing"
+k8s_names_st: "Beijing"
+k8s_names_o: "k8s"
+k8s_names_ou: "System"
+
 # 集群网络
 service_cidr: '10.0.0.0/24'
 cluster_dns: '10.0.0.2'   # 与roles/addons/files/coredns.yaml中IP一致，并且是service_cidr中的IP
