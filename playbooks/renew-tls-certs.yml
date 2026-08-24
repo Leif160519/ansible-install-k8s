@@ -1,0 +1,115 @@
+---
+- name: 1.重新签发证书
+  hosts: localhost
+  roles:
+    - tls
+  tags: tls
+
+- name: 2.分发etcd证书
+  tags: etcd
+  hosts: etcd
+  tasks:
+  - block:
+      - name: 拷贝etcd证书到指定目录
+        copy:
+          src: ssl/etcd/{{ item }}
+          dest: "{{ etcd_work_dir }}/ssl"
+        with_items:
+          - ca.pem
+          - server.pem
+          - server-key.pem
+
+      - name: 重启 etcd 服务
+        service:
+          name: etcd
+          state: restarted
+          enabled: true
+          daemon_reload: true
+
+      - name: 获取etcd集群状态
+        shell: sleep 5 && /bin/bash {{ etcd_work_dir }}/etcd.sh
+        register: status
+        delegate_to: "{{ groups.master.0 }}"
+        run_once: true
+        ignore_errors: true
+
+      - debug:
+          var: status.stdout_lines
+        run_once: true
+        delegate_to: localhost
+
+- name: 3.分发master节点证书
+  hosts: master
+  tags: master
+  tasks:
+  - block:
+    - name: 拷贝k8s证书到指定路径
+      copy:
+        src: ssl/k8s/{{ item }}
+        dest: "{{ k8s_work_dir }}/ssl"
+      with_items:
+        - ca.pem
+        - ca-key.pem
+        - server.pem
+        - server-key.pem
+        - kube-controller-manager.pem
+        - kube-controller-manager-key.pem
+        - kube-scheduler.pem
+        - kube-scheduler-key.pem
+        - admin.pem
+        - admin-key.pem
+
+    - name: 分发etcd证书到指定路径
+      copy:
+        src: "ssl/etcd/{{ item }}"
+        dest: "{{ k8s_work_dir }}/ssl/etcd"
+      with_items:
+        - ca.pem
+        - server.pem
+        - server-key.pem
+
+    - name: 重启相关服务
+      service:
+        name: "{{ item }}"
+        state: restarted
+        enabled: true
+        daemon_reload: true
+      with_items:
+        - kube-apiserver
+        - kube-controller-manager
+        - kube-scheduler
+
+    - name: 查看集群状态
+      shell: sleep 3 && kubectl get cs
+      register: cs
+
+    - debug:
+        var: cs.stdout_lines
+
+- name: 4.分发node节点证书
+  hosts: k8s
+  tags: node
+  tasks:
+  - block:
+    - name: 删除所有kubelet开头的证书
+      shell: find {{ k8s_work_dir }}/ssl/kubelet* -delete
+      ignore_errors: true
+
+    - name: 拷贝k8s证书到指定路径
+      copy:
+        src: ssl/k8s/{{ item }}
+        dest: "{{ k8s_work_dir }}/ssl"
+      with_items:
+        - ca.pem
+        - kube-proxy.pem
+        - kube-proxy-key.pem
+
+    - name: 重启相关服务
+      service:
+        name: "{{ item }}"
+        state: restarted
+        enabled: true
+        daemon_reload: true
+      with_items:
+        - kube-proxy
+        - kubelet

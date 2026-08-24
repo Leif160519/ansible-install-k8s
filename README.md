@@ -139,9 +139,7 @@ search localdomain
 > 端口可能会略有差异，有的可能是7890等
 
 ### 6.6 证书到期续签
-在`playbooks/ssl`下的etcd目录中，执行`generate_etcd_cert.sh`重新签发etcd证书
-在`playbooks/ssl`下的k8s目录中，执行`generate_k8s_cert.sh`重新签发k8s证书
-最后执行`ansible-playbook playbooks/single-master-deploy.yml  -t master -t node` 重新下发新证书并自动重启相关服务即可
+执行`ansible-playbook playbooks/renew-tls-certs.yml`即可
 
 > 如果只签发了etcd证书，不签发k8s证书，需要在重启etcd服务之后，重启kube-apiserver服务，让其重新加载对etcd的新人配置和新的TLS连接
 

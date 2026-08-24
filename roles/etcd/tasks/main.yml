@@ -97,7 +97,7 @@
     - etcd_restore.sh
 
 - name: 获取etcd集群状态
-  shell: /bin/bash {{ etcd_work_dir }}/etcd.sh
+  shell: sleep 5 && /bin/bash {{ etcd_work_dir }}/etcd.sh
   register: status
   run_once: true
   ignore_errors: true
