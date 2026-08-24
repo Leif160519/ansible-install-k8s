@@ -20,6 +20,9 @@ calico_node_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/node:
 calico_cni_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/cni:v3.25.0
 calico_kube_controllers_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/calico/kube-controllers:v3.25.0
 
+# pause_img: registry.aliyuncs.com/google_containers/pause:3.9
+# coredns_img: registry.aliyuncs.com/google_containers/coredns:1.8.6
+
 pause_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/registry.k8s.io/pause:3.9
 coredns_img: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/registry.k8s.io/coredns/coredns:v1.8.6
 
