@@ -121,3 +121,9 @@
     - shell: kubectl delete pod -n kube-system -l k8s-app=calico-node
       ignore_errors: true
 
+- name: 6.重启coredns,否则pod内域名解析会有问题,无法解析内部service
+  hosts: master
+  tags: master
+  tasks:
+    - shell: kubectl rollout restart deployment/coredns -n kube-system
+      ignore_errors: true
