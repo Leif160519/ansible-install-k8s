@@ -57,7 +57,7 @@
     day: "*"
     month: "*"
     weekday: "*"
-    job: "ntpdate time.windows.com"
+    job: "ntpdate time.windows.com && hwclock --systohc"
     name: "Time synchronization with windows"
     state: present
     user: root
